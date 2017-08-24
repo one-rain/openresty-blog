@@ -1,0 +1,50 @@
+<!-- Blog Entries Column -->
+<div class="col-md-8">
+    {% if type(posts) == nil or table.getn(posts) == 0 then %}
+    <p class="lead">
+        没有找到相关内容
+    </p>
+    {% end %}
+    <!-- Blog Post -->
+    {% for k, v in pairs(posts) do %}
+        <h2>
+            <a href="{* domain *}/article/{* posts[k].id *}">{* posts[k].title *}</a>
+        </h2>
+        <p>
+            <span class="glyphicon glyphicon-time" title="创作时间"></span>&nbsp;{* posts[k].create_time *} &nbsp;
+            {% local tag_ids = strutil.split(posts[k].tag_id, ',') %}
+            {% local tag_names = strutil.split(posts[k].tag_name, ',') %}
+            {% if tag_names ~= nli then %}
+                <span class="glyphicon glyphicon-tags" title="标签"></span>&nbsp;
+                {% for i, j in pairs(tag_names) do %}
+                    <a href="{* domain *}/tag/{* tag_ids[i] *}">{* tag_names[i] *}</a>&nbsp;
+                {% end %}
+            {% end %}
+            <span class="glyphicon glyphicon-eye-open" title="阅读次数"></span>&nbsp;{* posts[k].read_count *}
+        </p>
+        <hr>
+        {% if posts[k].img_path and string.len(posts[k].img_path) > 1 and posts[k].img_path ~= ngx.null then %}
+        <img class="img-responsive" src="{* posts[k].img_path *}">
+        <hr>
+        {% end %}
+        <p>
+            {* posts[k].content *}
+        </p>
+        <a class="btn btn-primary" href="{* domain *}/article/{* posts[k].id *}">阅读全文 <span class="glyphicon glyphicon-chevron-right"></span></a>
+        <hr>
+    {% end %}
+
+    <!-- Pager -->
+    <ul class="pager">
+        <li class="previous">
+            {% if page > 1 then %}
+            <a href="{* domain *}/tag/{* tag *}/page/{* page - 1 *}{% if s then %}?s={* s *}{% end %}">&larr; 上一页</a>
+            {% end %}
+        </li>
+        <li class="next">
+            {% if total_page > page then %}
+            <a href="{* domain *}/tag/{* tag *}/page/{* page + 1 *}{% if s then %}?s={* s *}{% end %}">下一页 &rarr;</a>
+            {% end %}
+        </li>
+    </ul>
+</div>

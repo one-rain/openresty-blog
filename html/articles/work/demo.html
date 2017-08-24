@@ -1,0 +1,604 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Flume安装</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<style type="text/css">
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+.pl-c {
+    color: #969896;
+}
+
+.pl-c1,.pl-mdh,.pl-mm,.pl-mp,.pl-mr,.pl-s1 .pl-v,.pl-s3,.pl-sc,.pl-sv {
+    color: #0086b3;
+}
+
+.pl-e,.pl-en {
+    color: #795da3;
+}
+
+.pl-s1 .pl-s2,.pl-smi,.pl-smp,.pl-stj,.pl-vo,.pl-vpf {
+    color: #333;
+}
+
+.pl-ent {
+    color: #63a35c;
+}
+
+.pl-k,.pl-s,.pl-st {
+    color: #a71d5d;
+}
+
+.pl-pds,.pl-s1,.pl-s1 .pl-pse .pl-s2,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre,.pl-src,.pl-v {
+    color: #df5000;
+}
+
+.pl-id {
+    color: #b52a1d;
+}
+
+.pl-ii {
+    background-color: #b52a1d;
+    color: #f8f8f8;
+}
+
+.pl-sr .pl-cce {
+    color: #63a35c;
+    font-weight: bold;
+}
+
+.pl-ml {
+    color: #693a17;
+}
+
+.pl-mh,.pl-mh .pl-en,.pl-ms {
+    color: #1d3e81;
+    font-weight: bold;
+}
+
+.pl-mq {
+    color: #008080;
+}
+
+.pl-mi {
+    color: #333;
+    font-style: italic;
+}
+
+.pl-mb {
+    color: #333;
+    font-weight: bold;
+}
+
+.pl-md,.pl-mdhf {
+    background-color: #ffecec;
+    color: #bd2c00;
+}
+
+.pl-mdht,.pl-mi1 {
+    background-color: #eaffea;
+    color: #55a532;
+}
+
+.pl-mdr {
+    color: #795da3;
+    font-weight: bold;
+}
+
+.pl-mo {
+    color: #1d3e81;
+}
+.task-list {
+padding-left:10px;
+margin-bottom:0;
+}
+
+.task-list li {
+    margin-left: 20px;
+}
+
+.task-list-item {
+list-style-type:none;
+padding-left:10px;
+}
+
+.task-list-item label {
+font-weight:400;
+}
+
+.task-list-item.enabled label {
+cursor:pointer;
+}
+
+.task-list-item+.task-list-item {
+margin-top:3px;
+}
+
+.task-list-item-checkbox {
+display:inline-block;
+margin-left:-20px;
+margin-right:3px;
+vertical-align:1px;
+}
+</style>
+<base href='file:\\\D:\idea-github\blog\notes\flume\'/>
+</head>
+<body>
+<!--intro
+<id>1006</id>
+<tag>Flume,数据收集</tag>
+<title>Flume1.7安装</title>
+<img>https://kiswo.com/image/work/DevGuide_image00.png</img>
+<intro>
+Flume是Apache提供的一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的框架，Flume支持在日志系统中定制各类数据发送方，用于收集数据；同时，Flume提供对数据进行简单处理，并写到各种数据接受方（可定制）的能力。<br><br>
+Flume的数据流由事件(Event)贯穿始终。事件是Flume的基本数据单位，它携带日志数据(字节数组形式)并且携带有头信息，这些Event由Agent外部的Source生成，当Source捕获事件后会进行特定的格式化，然后Source会把事件推入(单个或多个)Channel中。你可以把Channel看作是一个缓冲区，它将保存事件直到Sink处理完该事件。Sink负责持久化日志或者把事件推向另一个Source。<br><br>
+</intro>
+intro-->
+<h2 id="flume-">Flume的可靠性</h2>
+<hr>
+<p>当节点出现故障时，日志能够被传送到其他节点上而不会丢失。Flume提供了三种级别的可靠性保障，从强到弱依次分别为：end-to-end（收到数据agent首先将event写到磁盘上，当数据传送成功后，再删除；如果数据发送失败，可以重新发送。），Store on failure（这也是scribe采用的策略，当数据接收方crash时，将数据写到本地，待恢复后，继续发送），Besteffort（数据发送到接收方后，不会进行确认）。</p>
+<h2 id="flume-">Flume的一些核心概念</h2>
+<hr>
+<ul>
+<li>Agent：每台机器可以运行一个或多个Agent，一个Agent是由Source、Channel、Sink组成</li><li>Event：一个数据单元，用来传输，每条数据就是一个Event</li><li>Source：负责收集数据，将数据转为Event，并传递给Channel</li><li>Sink：从Channel中获取Event，做相关业务操作，并将获取的Event从Channel中移除，支持</li><li>Channel：连接Source和Sink，类似于队列</li></ul>
+<h2 id="-">几种部署模式</h2>
+<hr>
+<ul>
+<li>1、<strong> 简单模式 </strong></li></ul>
+<p><img src="https://kiswo.com/image/work/DevGuide_image00.png" alt="简单模式"></p>
+<p>通过Source收集数据，Channel用来临时存储，Sink将数据发送到目的地，这里画的HDFS，也可以是其他数据存储媒介，或者直接是一定格式的文件。</p>
+<ul>
+<li>2、<strong> 串联模式 </strong></li></ul>
+<p><img src="https://kiswo.com/image/work/UserGuide_image03.png" alt="串联模式"></p>
+<p>A服务器上的Agent foo将数据传输到B服务器上的Agent bar。即上游的Sink将数据发送到下游的Source。</p>
+<p>每个Agent都是独立的，但每个Agent又可以和其他的Agent连接起来。</p>
+<ul>
+<li>3、<strong> 合并模式（Consolidation） </strong></li></ul>
+<p><img src="https://kiswo.com/image/work/UserGuide_image02.png" alt="合并模式"></p>
+<p>将集群服务器上的日志汇总到一台服务器上时，可以采用这种方式。</p>
+<p>为了保证可靠性，一般在下游会有两个及以上的Agen（与Agent4同级），防止一个Agent出现异常时，可以切换到其他Agent上。即采用failover。</p>
+<ul>
+<li>4、<strong> 多路模式（Multiplexing） </strong></li></ul>
+<p><img src="https://kiswo.com/image/work/UserGuide_image.png" alt="多路模式"></p>
+<p>Source收集数据后，发送到多个Channel，每个Channel对应一个Sink。实现一条数据分发到不同的地方。</p>
+<p>此模式适用将数据一次收集，多处使用。例如：数据的离线存储和实时计算，就可以采用这种方式（当然，离线和实时也可以采用其他方式）。</p>
+<h2 id="-">自定义组件</h2>
+<hr>
+<p>Source、Channel、Sink是Flume的三大组件接口，可以根据业务的不同选择具体的实现类。</p>
+<p>Flume自带了许多三个组件的实现类，能满足大部分的需求。当然，可以自己实现接口，编写符合业务的组件。</p>
+<p>例如：</p>
+<ul>
+<li>1、Source的exec类型，当Agent意外停止，下次重启服务时，无法知道服务停止前读取的位置，这样会导致丢失数据；如果自定义Source，记录下读取的位置，就可以解决这个问题</li><li>2、Channel的memory是一种很高效的选择，但同样会存在丢失数据的问题。根据美团技术网站的介绍，他们已经自定义了一个Channel，实现空闲时用memory，内存不足时切换到file</li><li>3、自定义Sink使用较多，例如：将数据存入数据库或消息队列等，都可以由自定义Sink实现</li></ul>
+<h2 id="-">拦截器</h2>
+<hr>
+<p>Flume自带interceptors功能，用于过滤、拦截数据。在Source收集到数据后，发送到Channel前，会调用interceptors。默认不做任何处理，当在配置了拦截方式后，才会调用。</p>
+<p>Flume1.7自带的拦截器：</p>
+<ul>
+<li>Timestamp Interceptor</li><li>Host Interceptor</li><li>Static Interceptor</li><li>UUID Interceptor</li><li>Morphline Interceptor</li><li>Search and Replace Interceptor</li><li>Regex Filtering Interceptor</li><li>Regex Extractor Interceptor</li></ul>
+<h2 id="-">事务</h2>
+<hr>
+<p>Flume是支持事务的，事务的粒度是组件级别，即能在每个组件上实现事务。</p>
+<h2 id="-">注意事项</h2>
+<hr>
+<ul>
+<li>Channel的选择，一定要根据业务情况来定，file方式是最可靠的，但对磁盘读写要求较高（可以使用SSD），否则在高峰期延迟会很大。memory要考虑内存溢出，异常的数据恢复等问题</li><li>修改配置不用重启Agent，服务会自动重启</li></ul>
+<h2 id="-">安装</h2>
+<hr>
+<blockquote>
+<p><strong> 注意： </strong></p>
+<ul>
+<li>需要Jdk版本为7+的Java环境</li><li>系统需要有足够的内存供sources、channels、sinks使用</li><li>对操作的目录文件要有相应的读或写权限</li></ul>
+</blockquote>
+<pre><code class="lang-Bash">cd /opt/apps
+
+wget http://mirrors.hust.edu.cn/apache/flume/1.7.0/apache-flume-1.7.0-bin.tar.gz
+
+tar -zxvf apache-flume-1.7.0-bin.tar.gz
+
+ln -s /opt/apps/apache-flume-1.7.0-bin /opt/apps/flume
+</code></pre>
+<p><strong> 修改配置文件 </strong></p>
+<p><code>flume-env.sh</code> 为每个 <code>agent</code> 都会引用的公用配置。</p>
+<p>修改 <code>flume-env.sh</code> 配置：</p>
+<pre><code class="lang-Bash">export JAVA_HOME=/usr/local/jdk1.8.0_101
+
+#此处内存设置根据服务器配置和Nginx日志的容量来定。还可以在这里配置JVM监控
+export JAVA_OPTS=&quot;-Xms1024m -Xmx2048m -Xss256k -Xmn1024m -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:-UseGCOverheadLimit -Xloggc:/work/app/flume/logs/server-gc.log.$(date +%F) -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=1 -XX:GCLogFileSize=200M&quot;
+
+export JAVA_OPTS=&quot;$JAVA_OPTS -Dorg.apache.flume.log.rawdata=true -Dorg.apache.flume.log.printconfig=true &quot;
+</code></pre>
+<p>设置 <code>agent</code> 配置文件。</p>
+<pre><code class="lang-Bash">cd flume
+
+cp conf/flume-conf.properties.template conf/flume-conf-test.properties
+</code></pre>
+<p>我们以数据入Kafka为例，<code>flume-conf-test.properties</code> 配置如下：</p>
+<pre><code class="lang-Bash">a1.sources = s1
+a1.channels = c1
+a1.sinks = k1
+
+a1.sources.s1.type = exec
+a1.sources.s1.command = tail -F /work/app/logs/applog.log
+a1.sources.s1.batchSize = 1000
+a1.sources.s1.batchTimeout = 3000
+a1.sources.s1.channels = c1
+
+
+a1.channels.c1.type = memory
+a1.channels.c1.capacity = 200000
+a1.channels.c1.transactionCapacity = 20000
+a1.channels.c1.byteCapacityBufferPercentage = 20
+a1.channels.c1.byteCapacity = 10000000
+
+a1.sinks.k1.channel = c1
+a1.sinks.k1.type = org.apache.flume.sink.kafka.KafkaSink
+a1.sinks.k1.kafka.topic = test
+a1.sinks.k1.kafka.bootstrap.servers = kafka02:9092,kafka02:9092,kafka03:9092
+a1.sinks.k1.kafka.flumeBatchSize = 10000
+a1.sinks.k1.kafka.producer.acks = 1
+#a1.sinks.k1.kafka.producer.linger.ms = 5
+#a1.sinks.ki.kafka.producer.compression.type = snappy
+</code></pre>
+<p><strong>启动一个agent</strong></p>
+<p>配置了<code>flume-env.sh</code>:</p>
+<pre><code class="lang-Bash">./bin/flume-ng agent -n a1 -c conf -f conf/flume-conf-test.properties -Dflume.root.logger=INFO,DAILY -Dflume.log.dir=/work/app/flume/logs -Dflume.log.file=flume-test.log -DappFlag=flume-test
+
+#也可以对 agent 加上监控
+./bin/flume-ng agent -n a1 -c conf -f conf/flume-conf-test.properties -Dflume.root.logger=INFO,DAILY -Dflume.log.dir=/work/app/flume/logs -Dflume.log.file=flume-test.log -DappFlag=flume-test -Dflume.monitoring.type=http -Dflume.monitoring.port=1100 &amp;
+</code></pre>
+<p>以上是简单的配置使用，如果想实现上面介绍的几种部署模式，可以看官网的使用说明，很详细的。</p>
+<blockquote>
+<p>参考</p>
+<ul>
+<li><a href="https://flume.apache.org/FlumeUserGuide.html">Flume官网</a></li></ul>
+</blockquote>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

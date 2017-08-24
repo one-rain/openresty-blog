@@ -1,0 +1,37 @@
+#!/bin/bash
+
+echo "`date +"%Y-%m-%d %H:%M:%S"` Info: start sync blog"
+unset $(git rev-parse --local-env-vars)
+
+cd /opt/apps/nginx-apps/blog
+git pull
+
+git log --name-status --pretty=oneline -1 > /tmp/git.log
+
+PATH_FLAG="html/articles/"
+
+while read line
+do
+    TYPE=`echo "$line" | awk -F '\t' '{print $1}'`
+	FILE=`echo "$line" | awk -F '\t' '{print $2}'`
+
+    if [ "${TYPE}" = "A" -o "${TYPE}" = "M" -o "${TYPE}" = "D" ]; then
+        #FILENAME=${FILE##*/}
+        if [ `expr match ${FILE} ${PATH_FLAG}` -ne 0 ]; then
+		    echo "parse ${FILE}"
+		    python /opt/apps/nginx-apps/blog/scripts/parse_html.py ${FILE}
+        else
+            echo "the file is ${FILE}, nothing to do."
+        fi
+	else
+		echo "the type is ${TYPE}, nothing to do."
+    fi
+
+done < /tmp/git.log
+
+
+echo "`date +"%Y-%m-%d %H:%M:%S"` Info：end sync blog"
+sudo /usr/local/openresty/nginx/sbin/nginx -s reload
+
+
+exit 0
