@@ -2,13 +2,13 @@
 
 一个基于 [OpenResty](https://openresty.org/) 的简易博客系统。
 
-通过 [MarkdownPad2](http://markdownpad.com/) 编写博客内容，并将内容转化成 ``HTML` 。
+通过 [MarkdownPad2](http://markdownpad.com/) 编写博客内容，并将内容转化成 `HTML` 。
 
 通过 `Git hooks` 对提交的内容过滤，用 `Python` 对 `HTML` 内容进行解析，文章内容入数据库。
 
 通过 `Lua` 提供前端页面展示需要的数据。
 
-详细说明，请看[结合Markdown和Git,做简单的Blog内容发布](https://kiswo.com/article/1000)。
+详细说明，请看 [结合Markdown和Git,做简单的Blog内容发布](https://kiswo.com/article/1000)。
 
 # 目录结构说明
 
